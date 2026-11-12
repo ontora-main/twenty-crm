@@ -65,7 +65,7 @@ jobs:
       - name: Upload and install without running a sync
         run: |
           remote_directory="attio-release-$RELEASE-$RUN_ID"
-          gcloud compute scp --quiet --tunnel-through-iap --project "$PROJECT" --zone "$ZONE" --recurse release "$INSTANCE:~/$remote_directory"
-          gcloud compute ssh --quiet --tunnel-through-iap --project "$PROJECT" --zone "$ZONE" "$INSTANCE" \
+          gcloud compute scp --quiet --ssh-key-expire-after=10m --tunnel-through-iap --project "$PROJECT" --zone "$ZONE" --recurse release "$INSTANCE:~/$remote_directory"
+          gcloud compute ssh --quiet --ssh-key-expire-after=10m --tunnel-through-iap --project "$PROJECT" --zone "$ZONE" "$INSTANCE" \
             --command "sudo bash ~/$remote_directory/install-release.sh ~/$remote_directory $RELEASE"
           printf '### Connector deployed\n\nCommit: `%s`\n\nTarget: `%s / %s / %s`\n\nNo CRM sync was started.\n' "$RELEASE" "$PROJECT" "$ZONE" "$INSTANCE" >> "$GITHUB_STEP_SUMMARY"
