@@ -26,3 +26,8 @@ the cleanup merges. Workflow history is retained; files remain recoverable in Gi
 Reusable workflow references must continue to resolve. Package filters should
 include their own workflow and shared CI actions so CI configuration changes are
 still checked. Repository settings continue to require the two Attio checks.
+
+AI documentation and agent-skill drift reviewers are optional on forks. To enable
+them, configure `CLAUDE_CODE_OAUTH_TOKEN` and set repository variable
+`ENABLE_AI_DRIFT_CHECKS=true`. Deterministic docs lint and skill validation remain
+enabled without an AI provider.
