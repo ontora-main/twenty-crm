@@ -51,15 +51,20 @@ Uninstalling the app is not a rollback of imported CRM data or setup fields.
 
 ## Development
 
-Use Node 24, install dependencies in this app with Yarn and in the shared
-connector with `npm ci`, then run:
+Use Node 24 and install dependencies in this app with `yarn install --immutable`.
+The shared connector is installed as a local package dependency. Then run:
 
 ```sh
-npm test
-npm run typecheck
+yarn lint
+yarn test:unit
+yarn typecheck
 npx twenty@2.57.0 app build
 npx twenty@2.57.0 app apply --create --no-prune
 ```
+
+`yarn test` installs and removes the app on a disposable local Twenty server.
+Set `TWENTY_API_URL` and `TWENTY_API_KEY` for that fixture, and `TWENTY_CLI`
+when using a locally built CLI. Remote servers are rejected to protect live data.
 
 SDK definition entry points require default exports for Twenty's source scanner;
 ordinary functions use named exports. Keep credentials, local CLI authentication,
