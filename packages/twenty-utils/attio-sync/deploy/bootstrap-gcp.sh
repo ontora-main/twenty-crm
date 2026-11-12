@@ -32,7 +32,14 @@ for specification in 'attioDeployRead:compute.projects.get,compute.instances.get
   fi
 done
 gcloud projects add-iam-policy-binding "$project" --member "serviceAccount:$account" --role "projects/$project/roles/attioDeployRead" --condition=None --quiet >/dev/null
-gcloud projects add-iam-policy-binding "$project" --member "serviceAccount:$account" --role "projects/$project/roles/attioDeployInstance" --condition "expression=resource.type == 'compute.googleapis.com/Instance' && resource.name.endsWith('/zones/$zone/instances/$instance'),title=attio-crm-instance-only" --quiet >/dev/null
+# Newly created custom roles take time to become available to Compute IAM.
+for attempt in 1 2 3 4 5 6; do
+  if gcloud compute instances add-iam-policy-binding "$instance" --zone "$zone" --project "$project" --member "serviceAccount:$account" --role "projects/$project/roles/attioDeployInstance" --quiet >/dev/null; then
+    break
+  fi
+  [[ $attempt -lt 6 ]] || exit 1
+  sleep 10
+done
 gcloud projects add-iam-policy-binding "$project" --member "serviceAccount:$account" --role roles/iap.tunnelResourceAccessor --condition "expression=destination.port == 22 && destination.ip == '$vm_address',title=attio-crm-ssh-only" --quiet >/dev/null
 gcloud iam service-accounts add-iam-policy-binding "$vm_account" --project "$project" --member "serviceAccount:$account" --role roles/iam.serviceAccountUser --quiet >/dev/null
 printf '\nATTIO_GCP_WIF_PROVIDER=projects/%s/locations/global/workloadIdentityPools/attio-github/providers/github\nATTIO_GCP_DEPLOY_ACCOUNT=%s\n' "$project_number" "$account"
