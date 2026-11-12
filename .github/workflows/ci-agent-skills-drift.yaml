@@ -10,6 +10,18 @@ name: CI Agent Skills Drift
 
 on:
   pull_request:
+    paths:
+      - "packages/twenty-cli/**"
+      - "packages/twenty-sdk/**"
+      - "packages/twenty-client-sdk/**"
+      - "packages/twenty-shared/src/application/**"
+      - "packages/twenty-shared/src/types/**"
+      - "package.json"
+      - "yarn.lock"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-agent-skills-drift.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
 
 permissions:
   contents: read

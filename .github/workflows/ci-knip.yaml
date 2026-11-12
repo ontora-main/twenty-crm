@@ -5,10 +5,40 @@ permissions:
 
 on:
   push:
+    paths:
+      - "knip.json"
+      - "nx.json"
+      - "package.json"
+      - "yarn.lock"
+      - "packages/twenty-front/**"
+      - "packages/twenty-oxlint-rules/**"
+      - "packages/twenty-front-component-renderer/**"
+      - "packages/twenty-server/**"
+      - "packages/twenty-shared/**"
+      - "packages/twenty-ui/**"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-knip.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
     branches:
       - main
 
   pull_request:
+    paths:
+      - "knip.json"
+      - "nx.json"
+      - "package.json"
+      - "yarn.lock"
+      - "packages/twenty-front/**"
+      - "packages/twenty-oxlint-rules/**"
+      - "packages/twenty-front-component-renderer/**"
+      - "packages/twenty-server/**"
+      - "packages/twenty-shared/**"
+      - "packages/twenty-ui/**"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-knip.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
   merge_group:
 
 concurrency:

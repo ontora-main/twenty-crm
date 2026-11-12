@@ -5,6 +5,17 @@ permissions:
 
 on:
   pull_request:
+    paths:
+      - ".github/workflows/ci-test-docker-compose.yaml"
+      - "packages/twenty-docker/**"
+      - "packages/twenty-server/src/engine/core-modules/frontend/**"
+      - "packages/twenty-server/src/engine/core-modules/client-config/**"
+      - "docker-compose.yml"
+      - "package.json"
+      - "yarn.lock"
+      - ".yarnrc.yml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
   merge_group:
 
 concurrency:

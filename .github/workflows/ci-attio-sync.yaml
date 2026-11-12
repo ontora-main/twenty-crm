@@ -1,0 +1,62 @@
+name: Attio Connector CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: attio-ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  test:
+    name: Attio tests and typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: packages/twenty-utils/attio-sync
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: packages/twenty-utils/attio-sync/package-lock.json
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm test
+      - name: Test maintainer approval policy
+        working-directory: .
+        run: node --test .github/tests/sensitive-paths-approval.test.cjs
+      - run: npm run typecheck
+      - run: for script in deploy/*.sh; do bash -n "$script"; done
+  image:
+    name: Attio container smoke test
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Build immutable release
+        env:
+          RELEASE: ${{ github.sha }}
+        run: |
+          docker build --platform linux/amd64 -t "ontora-attio-sync:$RELEASE" packages/twenty-utils/attio-sync
+          docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges "ontora-attio-sync:$RELEASE" --help
+          docker run --rm --network none --user root --entrypoint bash --mount "type=bind,source=$PWD/packages/twenty-utils/attio-sync/deploy,target=/tests,readonly" "ontora-attio-sync:$RELEASE" /tests/test-install.sh
+          mkdir release
+          docker save "ontora-attio-sync:$RELEASE" | gzip > release/image.tar.gz
+          cp packages/twenty-utils/attio-sync/deploy/{install-release.sh,run.sh} release/
+          printf '%s\n' "$RELEASE" > release/revision
+          (cd release && sha256sum image.tar.gz install-release.sh run.sh revision > SHA256SUMS)
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: attio-release-${{ github.sha }}
+          path: release/
+          retention-days: 14
+          if-no-files-found: error

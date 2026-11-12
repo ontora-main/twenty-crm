@@ -5,10 +5,28 @@ permissions:
 
 on:
   push:
+    paths:
+      - "packages/twenty-utils/**"
+      - "package.json"
+      - "yarn.lock"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-utils-test.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
+      - "!packages/twenty-utils/attio-sync/**"
     branches:
       - main
 
   pull_request:
+    paths:
+      - "packages/twenty-utils/**"
+      - "package.json"
+      - "yarn.lock"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-utils-test.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
+      - "!packages/twenty-utils/attio-sync/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -20,6 +38,7 @@ jobs:
     with:
       files: |
         packages/twenty-utils/**
+        !packages/twenty-utils/attio-sync/**
   utils-test:
     needs: changed-files-check
     if: needs.changed-files-check.outputs.any_changed == 'true'

@@ -2,9 +2,43 @@ name: CI Example App Postcard
 
 on:
   push:
+    paths:
+      - "packages/twenty-apps/examples/postcard/**"
+      - "packages/twenty-sdk/**"
+      - "packages/twenty-cli/**"
+      - "packages/twenty-client-sdk/**"
+      - "packages/twenty-shared/**"
+      - "packages/twenty-server/**"
+      - "!packages/twenty-sdk/package.json"
+      - "!packages/twenty-client-sdk/package.json"
+      - "!packages/twenty-shared/package.json"
+      - "!packages/twenty-server/package.json"
+      - "package.json"
+      - "yarn.lock"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-example-app-postcard.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
     branches:
       - main
   pull_request:
+    paths:
+      - "packages/twenty-apps/examples/postcard/**"
+      - "packages/twenty-sdk/**"
+      - "packages/twenty-cli/**"
+      - "packages/twenty-client-sdk/**"
+      - "packages/twenty-shared/**"
+      - "packages/twenty-server/**"
+      - "!packages/twenty-sdk/package.json"
+      - "!packages/twenty-client-sdk/package.json"
+      - "!packages/twenty-shared/package.json"
+      - "!packages/twenty-server/package.json"
+      - "package.json"
+      - "yarn.lock"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-example-app-postcard.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
   workflow_dispatch:
 
 permissions:

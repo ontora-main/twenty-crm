@@ -2,6 +2,16 @@ name: CI Client SDK
 
 on:
   pull_request:
+    paths:
+      - "packages/twenty-client-sdk/**"
+      - "packages/twenty-shared/**"
+      - "yarn.lock"
+      - ".github/workflows/ci-client-sdk.yaml"
+      - "!packages/twenty-client-sdk/package.json"
+      - "package.json"
+      - ".yarnrc.yml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
   merge_group:
 
 permissions:

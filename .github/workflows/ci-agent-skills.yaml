@@ -2,14 +2,26 @@ name: CI Agent Skills
 
 on:
   push:
+    paths:
+      - "package.json"
+      - "packages/twenty-agent-skills/**"
+      - ".github/workflows/ci-agent-skills.yaml"
+      - "yarn.lock"
+      - ".yarnrc.yml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
     branches:
       - main
-    paths:
-      - package.json
-      - packages/twenty-agent-skills/**
-      - .github/workflows/ci-agent-skills.yaml
 
   pull_request:
+    paths:
+      - "package.json"
+      - "packages/twenty-agent-skills/**"
+      - ".github/workflows/ci-agent-skills.yaml"
+      - "yarn.lock"
+      - ".yarnrc.yml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
 
 permissions:
   contents: read

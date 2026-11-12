@@ -2,6 +2,17 @@ name: CI Website
 
 on:
   pull_request:
+    paths:
+      - "package.json"
+      - "yarn.lock"
+      - "packages/twenty-website/**"
+      - "packages/twenty-oxlint-rules/**"
+      - "packages/twenty-shared/**"
+      - "packages/twenty-ui/**"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-website.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
   merge_group:
 
 permissions:

@@ -2,10 +2,32 @@ name: CI Docs
 
 on:
   push:
+    paths:
+      - "package.json"
+      - "yarn.lock"
+      - "packages/twenty-ui/**"
+      - "packages/twenty-shared/**"
+      - ".github/workflows/ci-docs.yaml"
+      - "packages/twenty-docs/**"
+      - "packages/twenty-server/src/engine/metadata-modules/ai/ai-front-component/constants/generated/ui-documentation.json"
+      - ".yarnrc.yml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
     branches:
       - main
 
   pull_request:
+    paths:
+      - "package.json"
+      - "yarn.lock"
+      - "packages/twenty-ui/**"
+      - "packages/twenty-shared/**"
+      - ".github/workflows/ci-docs.yaml"
+      - "packages/twenty-docs/**"
+      - "packages/twenty-server/src/engine/metadata-modules/ai/ai-front-component/constants/generated/ui-documentation.json"
+      - ".yarnrc.yml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
 
 permissions:
   contents: read

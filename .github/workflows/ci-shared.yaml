@@ -2,6 +2,15 @@ name: CI Shared
 
 on:
   pull_request:
+    paths:
+      - "packages/twenty-shared/**"
+      - "packages/twenty-oxlint-rules/**"
+      - "package.json"
+      - "yarn.lock"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-shared.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
   merge_group:
 
 permissions:

@@ -2,8 +2,36 @@ name: CI Front
 
 on:
   pull_request:
+    paths:
+      - "package.json"
+      - "yarn.lock"
+      - "packages/twenty-front/**"
+      - "packages/twenty-oxlint-rules/**"
+      - "packages/twenty-front-component-renderer/**"
+      - "packages/twenty-ui/**"
+      - "packages/twenty-shared/**"
+      - "packages/twenty-sdk/**"
+      - "!packages/twenty-sdk/package.json"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-front.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
   merge_group:
   push:
+    paths:
+      - "package.json"
+      - "yarn.lock"
+      - "packages/twenty-front/**"
+      - "packages/twenty-oxlint-rules/**"
+      - "packages/twenty-front-component-renderer/**"
+      - "packages/twenty-ui/**"
+      - "packages/twenty-shared/**"
+      - "packages/twenty-sdk/**"
+      - "!packages/twenty-sdk/package.json"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-front.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
     branches: [main]
 
 permissions:

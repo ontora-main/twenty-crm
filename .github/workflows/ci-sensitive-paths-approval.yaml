@@ -1,8 +1,7 @@
 name: Sensitive Paths Approval
 
 # Requires an approval from a maintainer when a PR touches CI, supply-chain or
-# agent configuration. Approvals survive pushes unless dismissed or replaced
-# by a changes-requested review. Reports the
+# agent configuration. Approvals must cover the current commit. Reports the
 # "Sensitive paths approval" commit status, which the main ruleset requires.
 on:
   pull_request_target:
@@ -33,7 +32,7 @@ jobs:
             const STATUS_CONTEXT = 'Sensitive paths approval';
             const SENSITIVE_PATH_PREFIXES = ['.github/', '.claude/'];
             const SENSITIVE_FILES = ['.yarnrc.yml', '.mcp.json', 'CLAUDE.md'];
-            const APPROVERS = [
+            const UPSTREAM_APPROVERS = [
               'charlesBochet',
               'Weiko',
               'prastoin',
@@ -45,6 +44,22 @@ jobs:
             ].map((login) => login.toLowerCase());
 
             const { owner, repo } = context.repo;
+            const maintainerCache = new Map();
+            const isMaintainer = async (login) => {
+              if (owner === 'twentyhq' && repo === 'twenty') {
+                return UPSTREAM_APPROVERS.includes(login.toLowerCase());
+              }
+              if (!maintainerCache.has(login)) {
+                try {
+                  const { data } = await github.rest.repos.getCollaboratorPermissionLevel({ owner, repo, username: login });
+                  maintainerCache.set(login, data.permission === 'admin' || data.role_name === 'maintain');
+                } catch (error) {
+                  if (error.status !== 404) throw error;
+                  maintainerCache.set(login, false);
+                }
+              }
+              return maintainerCache.get(login);
+            };
 
             const setStatus = (sha, state, description) =>
               github.rest.repos.createCommitStatus({
@@ -95,13 +110,13 @@ jobs:
               const latestReviewByApprover = new Map();
               for (const review of reviews) {
                 const login = review.user?.login;
-                if (!login || !APPROVERS.includes(login.toLowerCase())) continue;
+                if (!login || login.toLowerCase() === pull.user.login.toLowerCase() || review.user.type === 'Bot' || !(await isMaintainer(login))) continue;
                 if (review.state === 'COMMENTED' || review.state === 'PENDING') continue;
                 latestReviewByApprover.set(login, review);
               }
 
               for (const [login, review] of latestReviewByApprover) {
-                if (review.state !== 'APPROVED') continue;
+                if (review.state !== 'APPROVED' || review.commit_id !== headSha) continue;
                 await setStatus(headSha, 'success', `Approved by ${login}`);
                 return;
               }
