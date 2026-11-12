@@ -31,3 +31,6 @@ AI documentation and agent-skill drift reviewers are optional on forks. To enabl
 them, configure `CLAUDE_CODE_OAUTH_TOKEN` and set repository variable
 `ENABLE_AI_DRIFT_CHECKS=true`. Deterministic docs lint and skill validation remain
 enabled without an AI provider.
+
+CLI, frontend and E2E jobs use standard `ubuntu-latest` runners on forks;
+Twenty's custom larger-runner labels are used only in `twentyhq/twenty`.
