@@ -2,9 +2,39 @@ name: CI Example App Hello World
 
 on:
   push:
+    paths:
+      - "packages/twenty-apps/examples/hello-world/**"
+      - "packages/twenty-sdk/**"
+      - "packages/twenty-cli/**"
+      - "packages/twenty-client-sdk/**"
+      - "packages/twenty-shared/**"
+      - "!packages/twenty-sdk/package.json"
+      - "!packages/twenty-client-sdk/package.json"
+      - "!packages/twenty-shared/package.json"
+      - "package.json"
+      - "yarn.lock"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-example-app-hello-world.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
     branches:
       - main
   pull_request:
+    paths:
+      - "packages/twenty-apps/examples/hello-world/**"
+      - "packages/twenty-sdk/**"
+      - "packages/twenty-cli/**"
+      - "packages/twenty-client-sdk/**"
+      - "packages/twenty-shared/**"
+      - "!packages/twenty-sdk/package.json"
+      - "!packages/twenty-client-sdk/package.json"
+      - "!packages/twenty-shared/package.json"
+      - "package.json"
+      - "yarn.lock"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-example-app-hello-world.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
   workflow_dispatch:
 
 permissions:

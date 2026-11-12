@@ -2,6 +2,18 @@ name: CI Front Component Renderer
 
 on:
   pull_request:
+    paths:
+      - "package.json"
+      - "yarn.lock"
+      - "packages/twenty-front-component-renderer/**"
+      - "packages/twenty-sdk/**"
+      - "packages/twenty-shared/**"
+      - "packages/twenty-ui/**"
+      - "!packages/twenty-sdk/package.json"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-front-component-renderer.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
   merge_group:
 
 permissions:

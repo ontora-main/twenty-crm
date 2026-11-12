@@ -2,6 +2,28 @@ name: CI CLI
 
 on:
   pull_request:
+    paths:
+      - "packages/twenty-cli/**"
+      - "packages/twenty-shared/**"
+      - "packages/twenty-sdk/**"
+      - "packages/twenty-client-sdk/**"
+      - "packages/twenty-apps/fixtures/**"
+      - "packages/twenty-ui/**"
+      - "packages/twenty-server/**"
+      - ".github/actions/spawn-twenty-server/**"
+      - "packages/twenty-oxlint-rules/**"
+      - ".github/actions/yarn-install/**"
+      - ".github/actions/restore-cache/**"
+      - ".github/actions/save-cache/**"
+      - ".github/workflows/ci-cli.yaml"
+      - "package.json"
+      - "yarn.lock"
+      - "nx.json"
+      - "tsconfig.base.json"
+      - ".yarnrc.yml"
+      - ".yarn/**"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
   merge_group:
 
 permissions:

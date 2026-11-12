@@ -2,6 +2,17 @@ name: CI Zapier
 
 on:
   pull_request:
+    paths:
+      - "packages/twenty-zapier/**"
+      - "packages/twenty-server/**"
+      - "!packages/twenty-zapier/package.json"
+      - "!packages/twenty-zapier/CHANGELOG.md"
+      - "package.json"
+      - "yarn.lock"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-zapier.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
 
 permissions:
   contents: read
@@ -89,7 +100,7 @@ jobs:
           tasks: test
 
   zapier-test:
-    needs: server-setup
+    needs: [server-setup, changed-files-check]
     if: needs.changed-files-check.outputs.any_changed == 'true'
     timeout-minutes: 30
     runs-on: ubuntu-latest

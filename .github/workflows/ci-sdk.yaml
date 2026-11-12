@@ -2,6 +2,19 @@ name: CI SDK
 
 on:
   pull_request:
+    paths:
+      - "packages/twenty-sdk/**"
+      - "packages/twenty-client-sdk/**"
+      - "packages/twenty-server/**"
+      - "packages/twenty-ui/**"
+      - ".github/workflows/ci-sdk.yaml"
+      - "!packages/twenty-sdk/package.json"
+      - "!packages/twenty-client-sdk/package.json"
+      - "package.json"
+      - "yarn.lock"
+      - ".yarnrc.yml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
   merge_group:
 
 permissions:

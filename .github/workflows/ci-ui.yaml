@@ -2,8 +2,32 @@ name: CI UI
 
 on:
   pull_request:
+    paths:
+      - "package.json"
+      - "yarn.lock"
+      - "packages/twenty-ui/**"
+      - "packages/twenty-shared/**"
+      - "packages/twenty-oxlint-rules/scripts/check-unlocalized-strings.mjs"
+      - "packages/twenty-oxlint-rules/scripts/filter-unlocalized-strings.mjs"
+      - "packages/twenty-oxlint-rules/.oxlintrc.i18n.json"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-ui.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
   merge_group:
   push:
+    paths:
+      - "package.json"
+      - "yarn.lock"
+      - "packages/twenty-ui/**"
+      - "packages/twenty-shared/**"
+      - "packages/twenty-oxlint-rules/scripts/check-unlocalized-strings.mjs"
+      - "packages/twenty-oxlint-rules/scripts/filter-unlocalized-strings.mjs"
+      - "packages/twenty-oxlint-rules/.oxlintrc.i18n.json"
+      - ".yarnrc.yml"
+      - ".github/workflows/ci-ui.yaml"
+      - ".github/workflows/changed-files.yaml"
+      - ".github/actions/**"
     branches: [main]
 
 permissions:
