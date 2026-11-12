@@ -10,11 +10,13 @@ on:
 
 jobs:
   website-changed-files:
+    if: github.repository == 'twentyhq/twenty'
     uses: ./.github/workflows/changed-files.yaml
     with:
       files: packages/twenty-website/**
 
   deploy-main:
+    if: github.repository == 'twentyhq/twenty'
     needs: website-changed-files
     timeout-minutes: 3
     runs-on: ubuntu-latest

@@ -2,7 +2,7 @@ name: Attio Connector CI
 on:
   pull_request:
   push:
-    branches: [main, max/attio-sync-connector]
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
