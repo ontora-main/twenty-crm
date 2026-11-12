@@ -28,6 +28,9 @@ jobs:
           cache-dependency-path: packages/twenty-utils/attio-sync/package-lock.json
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm test
+      - name: Test maintainer approval policy
+        working-directory: .
+        run: node --test .github/tests/sensitive-paths-approval.test.cjs
       - run: npm run typecheck
       - run: for script in deploy/*.sh; do bash -n "$script"; done
   image:
