@@ -15,7 +15,7 @@
     "lint": "oxlint -c .oxlintrc.json src"
   },
   "dependencies": {
-    "@ontora/attio-twenty-sync": "file:../../../twenty-utils/attio-sync",
+    "@ontora/attio-twenty-sync": "file:../../../twenty-utils/attio-sync/src",
     "zod": "4.6.7"
   },
   "devDependencies": {

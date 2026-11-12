@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { type Request } from '@ontora/attio-twenty-sync/src/api.ts';
+import { type Request } from '@ontora/attio-twenty-sync/api.ts';
 
 export const inspectConnection = async (request: Request) => {
   const identity = z

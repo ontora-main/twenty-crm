@@ -4,11 +4,11 @@ import {
   readSource,
   readTarget,
   type Request,
-} from '@ontora/attio-twenty-sync/src/api.ts';
-import { applyPlan } from '@ontora/attio-twenty-sync/src/apply.ts';
-import { canonical } from '@ontora/attio-twenty-sync/src/data.ts';
-import { planSync } from '@ontora/attio-twenty-sync/src/planner.ts';
-import { planSchema } from '@ontora/attio-twenty-sync/src/schema.ts';
+} from '@ontora/attio-twenty-sync/api.ts';
+import { applyPlan } from '@ontora/attio-twenty-sync/apply.ts';
+import { canonical } from '@ontora/attio-twenty-sync/data.ts';
+import { planSync } from '@ontora/attio-twenty-sync/planner.ts';
+import { planSchema } from '@ontora/attio-twenty-sync/schema.ts';
 
 export const INPUT_SCHEMA = z
   .object({

@@ -398,12 +398,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ontora/attio-twenty-sync@file:../../../twenty-utils/attio-sync::locator=%40ontora%2Ftwenty-attio%40workspace%3A.":
+"@ontora/attio-twenty-sync@file:../../../twenty-utils/attio-sync/src::locator=%40ontora%2Ftwenty-attio%40workspace%3A.":
   version: 0.1.0
-  resolution: "@ontora/attio-twenty-sync@file:../../../twenty-utils/attio-sync#../../../twenty-utils/attio-sync::hash=3ebd17&locator=%40ontora%2Ftwenty-attio%40workspace%3A."
+  resolution: "@ontora/attio-twenty-sync@file:../../../twenty-utils/attio-sync/src#../../../twenty-utils/attio-sync/src::hash=368e97&locator=%40ontora%2Ftwenty-attio%40workspace%3A."
   dependencies:
     zod: "npm:4.6.7"
-  checksum: 10c0/24678ae1ce44494306161e4a48a2def27a3e44ad0315c78aaebf959151afb2d2afd5fd591bc7592644446829b5ec4c1474d8b14f7ee9a4bec376d1745460d6fb
+  checksum: 10c0/390d1b35e745cf00194a87ea44c4bc5990564fa4c33bb26cae26a79d11a5c376c0b1da31219c1a163554c797dbdd6a7a160532c3050ab34739941c68f3020cc5
   languageName: node
   linkType: hard
 
@@ -411,7 +411,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@ontora/twenty-attio@workspace:."
   dependencies:
-    "@ontora/attio-twenty-sync": "file:../../../twenty-utils/attio-sync"
+    "@ontora/attio-twenty-sync": "file:../../../twenty-utils/attio-sync/src"
     "@types/node": "npm:^24.0.0"
     oxlint: "npm:0.16.0"
     tsx: "npm:4.21.0"

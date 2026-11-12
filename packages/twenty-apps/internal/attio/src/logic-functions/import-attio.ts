@@ -4,8 +4,8 @@ import {
   jsonSchemaToInputSchema,
   type InputJsonSchema,
 } from 'twenty-sdk/logic-function';
-import { createRequest } from '@ontora/attio-twenty-sync/src/api.ts';
-import { row } from '@ontora/attio-twenty-sync/src/data.ts';
+import { createRequest } from '@ontora/attio-twenty-sync/api.ts';
+import { row } from '@ontora/attio-twenty-sync/data.ts';
 import { inspectConnection } from '../connection';
 import { z } from 'zod';
 import { IDENTIFIERS } from '../identifiers';
