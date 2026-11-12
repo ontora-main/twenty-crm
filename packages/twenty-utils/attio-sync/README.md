@@ -123,3 +123,63 @@ API contracts: [Attio records](https://docs.attio.com/rest-api/endpoint-referenc
 [notes](https://docs.attio.com/rest-api/endpoint-reference/notes/list-notes),
 [tasks](https://docs.attio.com/rest-api/endpoint-reference/tasks/list-tasks).
 Twenty REST behavior is based on the server integration tests in this repository.
+
+## CI and production deployment
+
+`Attio Connector CI` runs the ten behavior tests, TypeScript, an AMD64 container
+build, an offline/non-root smoke test, and isolated deployment safety tests. It
+publishes only the image and installation files, never CRM reports or credentials.
+Actions and the Node base image are pinned to immutable revisions/digests.
+
+After a successful **push CI run on main**, `Attio Connector Deploy` downloads that
+exact run's release, validates checksums and revision, and installs it on:
+
+- Project `ontora-twenty-crm-prod`
+- VM `crm-prod`, zone `europe-west3-a`
+- Directory `/opt/ontora/attio-sync`
+
+PR runs cannot deploy. The protected `attio-production` environment permits only
+main. Workload Identity Federation additionally restricts the GitHub repository
+and owner numeric IDs, branch, environment, and deployment workflow path. No
+long-lived GCP keys are stored in GitHub. The deployer can read Compute metadata,
+modify metadata only on this VM (for expiring SSH keys), use its attached service
+account and tunnel to its SSH port through IAP. This implies administrative access
+to this VM: treat changes to the deployment workflow as production-sensitive.
+The existing metadata-based SSH mode is retained; OS Login is not enabled by this
+connector. No public SSH firewall rule is added.
+
+`deploy/bootstrap-gcp.sh` idempotently provisions these dedicated IAM resources.
+Run it as a project administrator. Configure its two printed non-secret values as
+`ATTIO_GCP_WIF_PROVIDER` and `ATTIO_GCP_DEPLOY_ACCOUNT` in the GitHub environment.
+The VM needs Docker, sudo, and an existing ingress rule from IAP
+(`35.235.240.0/20`) to TCP 22. The pipeline does not modify firewall rules.
+
+Deployment loads a versioned image and smoke-tests it without network access
+before atomically switching `current`. The previous release remains at `previous`.
+It neither restarts Twenty nor performs schema changes or synchronization.
+No scheduler or automatic data import is installed.
+
+On the VM, create a **root-owned, mode 0600** file
+`/opt/ontora/attio-sync/runtime.env` containing the four required variables from
+Setup. Store optional mapping JSON under `/opt/ontora/attio-sync/data/` and reference
+it inside the container as `/data/mapping.json`. Reports persist under
+`/opt/ontora/attio-sync/data/.local/` and are never uploaded to GitHub.
+
+```sh
+sudo /opt/ontora/attio-sync/current/run.sh setup-plan
+sudo /opt/ontora/attio-sync/current/run.sh setup-apply
+sudo /opt/ontora/attio-sync/current/run.sh plan
+sudo /opt/ontora/attio-sync/current/run.sh apply
+```
+
+The launcher defaults to `plan`, runs as a non-root container user with a read-only
+root filesystem and resource limits, and prevents concurrent runs via a fixed
+container name. A hard kill can leave the local lock: inspect the container and
+report before removing any stale lock. Deployment is serialized independently of
+sync; a running sync continues using its original image ID.
+
+Rollback code (not CRM data) by atomically repointing `current` to a verified
+release in `releases/`, then use `run.sh plan`. Keep the previous image until no
+rollback is needed. Uploaded release archives in the deployment account's home
+and old images require periodic operator cleanup; never prune a running image or
+the current/previous release. Deployment artifacts expire from GitHub after 14 days.

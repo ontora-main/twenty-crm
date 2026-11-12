@@ -45,6 +45,7 @@ jobs:
         run: |
           docker build --platform linux/amd64 -t "ontora-attio-sync:$RELEASE" packages/twenty-utils/attio-sync
           docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges "ontora-attio-sync:$RELEASE" --help
+          docker run --rm --network none --user root --entrypoint bash --mount "type=bind,source=$PWD/packages/twenty-utils/attio-sync/deploy,target=/tests,readonly" "ontora-attio-sync:$RELEASE" /tests/test-install.sh
           mkdir release
           docker save "ontora-attio-sync:$RELEASE" | gzip > release/image.tar.gz
           cp packages/twenty-utils/attio-sync/deploy/{install-release.sh,run.sh} release/
