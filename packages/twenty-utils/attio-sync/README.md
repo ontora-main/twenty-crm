@@ -180,6 +180,6 @@ sync; a running sync continues using its original image ID.
 
 Rollback code (not CRM data) by atomically repointing `current` to a verified
 release in `releases/`, then use `run.sh plan`. Keep the previous image until no
-rollback is needed. Uploaded release archives in the deployment account's home
-and old images require periodic operator cleanup; never prune a running image or
+rollback is needed. Failed uploads in the deployment account's home
+and old images require periodic operator cleanup; successful uploads are removed; never prune a running image or
 the current/previous release. Deployment artifacts expire from GitHub after 14 days.
