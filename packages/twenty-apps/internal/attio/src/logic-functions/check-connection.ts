@@ -2,7 +2,7 @@ import {
   defineHealthCheck,
   type ApplicationHealthCheckResult,
 } from 'twenty-sdk/define';
-import { createRequest } from '../../../../../twenty-utils/attio-sync/src/api.ts';
+import { createRequest } from '@ontora/attio-twenty-sync/src/api.ts';
 import { inspectConnection } from '../connection';
 import { IDENTIFIERS } from '../identifiers';
 

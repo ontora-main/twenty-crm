@@ -5,8 +5,8 @@ import {
   COLLECTIONS,
   stableId,
   type Row,
-} from '../../../../twenty-utils/attio-sync/src/data.ts';
-import { type Request } from '../../../../twenty-utils/attio-sync/src/api.ts';
+} from '@ontora/attio-twenty-sync/src/data.ts';
+import { type Request } from '@ontora/attio-twenty-sync/src/api.ts';
 
 const workspaceId = stableId('test-workspace');
 const makeFixture = () => {

@@ -10,13 +10,18 @@
   "packageManager": "yarn@4.18.1",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test src/*.test.ts"
+    "test": "tsx --test src/__tests__/*.integration-test.ts",
+    "test:unit": "tsx --test src/*.test.ts",
+    "lint": "oxlint -c .oxlintrc.json src"
   },
   "dependencies": {
+    "@ontora/attio-twenty-sync": "file:../../../twenty-utils/attio-sync",
     "zod": "4.6.7"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
+    "oxlint": "0.16.0",
+    "tsx": "4.21.0",
     "twenty-client-sdk": "2.57.0",
     "twenty-sdk": "2.57.0",
     "typescript": "5.9.3"
